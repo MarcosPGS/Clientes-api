@@ -37,6 +37,22 @@ public class ClienteResource {
 		return ResponseEntity.ok(clientes);
 	}
 	
+	// endpoint busca por nome
+		@GetMapping("/{nomeCliente}")
+		public ResponseEntity<List<Cliente>> buscaNome(@PathVariable("nomeCliente") String nome) {
+			
+				List<Cliente> clientesEncontrado = service.buscarClientePorNome(nome);		
+				if (clientesEncontrado.isEmpty()) {
+					return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+				}
+				
+				return ResponseEntity.ok().body(clientesEncontrado);
+			
+
+		}
+		
+		
+	
 	@PostMapping
 	public ResponseEntity<Object> salvarCliente( @RequestBody @Valid Cliente cliente){
 		try {

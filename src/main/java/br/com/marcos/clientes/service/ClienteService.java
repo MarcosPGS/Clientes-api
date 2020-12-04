@@ -1,21 +1,17 @@
 package br.com.marcos.clientes.service;
 
-import java.nio.channels.ClosedByInterruptException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.marcos.clientes.exceptions.RegraException;
 import br.com.marcos.clientes.model.Cliente;
 import br.com.marcos.clientes.repository.ClienteRepository;
 import br.com.marcos.clientes.util.ValidarCPF;
-import ch.qos.logback.core.net.server.Client;
-import net.bytebuddy.asm.Advice.Local;
 
 @Service
 public class ClienteService {
@@ -28,7 +24,15 @@ public class ClienteService {
 		return repository.findAll();
 	}
 	
-	public Cliente salvarCliente(Cliente cliente) throws RegraException {
+	
+	public List<Cliente> buscarClientePorNome(String nome){
+		return repository.findByNome(nome);
+	}
+	
+	public Cliente salvarCliente(Cliente c) throws RegraException {
+		Cliente cliente = new Cliente();
+		cliente.setCpf(c.getCpf());
+		cliente.setNome(c.getNome().toUpperCase());
 		
 		if (ValidarCPF.isValidCpf(cliente.getCpf()) == false ) {
 			throw new RegraException("Cpf inválido.");

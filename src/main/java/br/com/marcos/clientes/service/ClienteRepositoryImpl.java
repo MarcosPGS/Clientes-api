@@ -54,6 +54,36 @@ public class ClienteRepositoryImpl implements ClienteRepositoryQuery{
 	        return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
+	@Override
+	public List<Cliente> findByNome(String nome) {
+		List<Cliente> clientesEncontrados = null;
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<Cliente> clienteCr = builder.createQuery(Cliente.class);
+
+			Root<Cliente> clienteRoot = clienteCr.from(Cliente.class);
+			Predicate[] predicates = criarResticoesNome(nome, builder, clienteRoot);
+			clienteCr.where(predicates);
+
+			TypedQuery<Cliente> typedQuery = manager.createQuery(clienteCr);
+
+			clientesEncontrados = typedQuery.getResultList();
+
+			return (List<Cliente>) clientesEncontrados;
+
+		} catch (Exception e) {
+			return clientesEncontrados;
+		}
+	}
+
+	private Predicate[] criarResticoesNome(String nome, CriteriaBuilder builder, Root<Cliente> clienteRoot) {
+		List<Predicate> predicates = new ArrayList<>();
+		if (!StringUtils.isEmpty(nome)) {
+			predicates.add(builder.like(builder.lower(clienteRoot.get("nome")), "%" + (nome.toLowerCase()) + "%"));
+		}
+		return predicates.toArray(new Predicate[predicates.size()]);
+	}
+
 	
 
 }
