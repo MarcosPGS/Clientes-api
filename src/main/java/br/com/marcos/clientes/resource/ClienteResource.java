@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.marcos.clientes.dto.ClienteInfoDTO;
 import br.com.marcos.clientes.exceptions.RegraException;
 import br.com.marcos.clientes.model.Cliente;
 import br.com.marcos.clientes.service.ClienteService;
@@ -39,14 +40,39 @@ public class ClienteResource {
 	
 	// endpoint busca por nome
 		@GetMapping("/{nomeCliente}")
-		public ResponseEntity<List<Cliente>> buscaNome(@PathVariable("nomeCliente") String nome) {
+		public ResponseEntity<?> buscaNome(@PathVariable("nomeCliente") String nome) {
 			
-				List<Cliente> clientesEncontrado = service.buscarClientePorNome(nome);		
-				if (clientesEncontrado.isEmpty()) {
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-				}
 				
-				return ResponseEntity.ok().body(clientesEncontrado);
+				try {
+					List<Cliente> clientesEncontrado = service.buscarClientePorNome(nome);		
+					if (clientesEncontrado.isEmpty()) {
+						return ResponseEntity.ok().body(null);
+					}
+					
+					return ResponseEntity.ok().body(clientesEncontrado);
+					
+				} catch (Exception e) {
+					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+				}
+			
+
+		}
+		
+		@GetMapping("/totalizador")
+		public ResponseEntity<?> totalizadoresCliente() {
+			
+				
+				try {
+					ClienteInfoDTO totalizador = service.totalizarClientes();	
+					if (totalizador == null) {
+						return ResponseEntity.ok().body(null);
+					}
+					
+					return ResponseEntity.ok().body(totalizador);
+					
+				} catch (Exception e) {
+					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+				}
 			
 
 		}

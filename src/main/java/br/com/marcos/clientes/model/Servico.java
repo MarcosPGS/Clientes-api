@@ -25,9 +25,9 @@ public class Servico {
 	@Column
 	private BigDecimal valor;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_cliente")
-	private Cliente cliente;
+//	@ManyToOne
+//	@JoinColumn(name = "id_cliente")
+//	private Cliente cliente;
 
 	public long getId() {
 		return id;
@@ -53,13 +53,13 @@ public class Servico {
 		this.valor = valor;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+//	public Cliente getCliente() {
+//		return cliente;
+//	}
+//
+//	public void setCliente(Cliente cliente) {
+//		this.cliente = cliente;
+//	}
 
 	@Override
 	public int hashCode() {

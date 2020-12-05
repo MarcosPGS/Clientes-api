@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.marcos.clientes.dto.ClienteInfoDTO;
 import br.com.marcos.clientes.exceptions.RegraException;
 import br.com.marcos.clientes.model.Cliente;
 import br.com.marcos.clientes.repository.ClienteRepository;
@@ -24,6 +25,24 @@ public class ClienteService {
 		return repository.findAll();
 	}
 	
+	public ClienteInfoDTO  totalizarClientes() {
+		ClienteInfoDTO cliente = new ClienteInfoDTO();
+		long qtdClientes = 0;
+		
+		List<Cliente> lista = listarTodosCliente();
+		long qtdClientesAtivos = lista.stream().filter(e -> e.getAtivo().equals("S")).count();
+		long qtdClientesInativos = lista.stream().filter(e -> e.getAtivo().equals("N")).count();
+		qtdClientes = lista.size();
+		
+		cliente.setQuantidadeClientesAtivos(qtdClientesAtivos);
+		cliente.setQuantidadeClientesInativos(qtdClientesInativos != 0 ? qtdClientesInativos: 0);
+		cliente.setTotalClientes(qtdClientes);
+		cliente.setData(LocalDate.now());
+		
+		return cliente;
+		
+	}
+	
 	
 	public List<Cliente> buscarClientePorNome(String nome){
 		return repository.findByNome(nome);
@@ -32,6 +51,7 @@ public class ClienteService {
 	public Cliente salvarCliente(Cliente c) throws RegraException {
 		Cliente cliente = new Cliente();
 		cliente.setCpf(c.getCpf());
+		cliente.setAtivo(c.getAtivo().toUpperCase());
 		cliente.setNome(c.getNome().toUpperCase());
 		
 		if (ValidarCPF.isValidCpf(cliente.getCpf()) == false ) {

@@ -23,14 +23,20 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable = false, length = 150)
+	@Column(name="nome", nullable = false, length = 150)
 	@NotEmpty(message="{campo.nome.obrigatorio}")
 	private String nome;
 	
-	@Column(nullable = false, length = 11)
+	@Column(name="cpf",nullable = false, length = 11)
 	@NotNull
 	@NotEmpty(message="{campo.cpf.obrigatorio}")
 	private String cpf;
+	
+	@Column(name="ativo",length = 1)
+	private String ativo;
+	
+	@Column(name="celular",length = 11)
+	private String celular;
 	
 	@Column(name = "data_cadastro")
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -46,10 +52,26 @@ public class Cliente {
 	}
 
 	
-	
+
+
+	public String getCelular() {
+		return celular;
+	}
+
+
+
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+
+
+
 	public long getId() {
 		return id;
 	}
+
 
 
 
@@ -59,9 +81,11 @@ public class Cliente {
 
 
 
+
 	public String getNome() {
 		return nome;
 	}
+
 
 
 
@@ -71,9 +95,11 @@ public class Cliente {
 
 
 
+
 	public String getCpf() {
 		return cpf;
 	}
+
 
 
 
@@ -83,9 +109,25 @@ public class Cliente {
 
 
 
+
+	public String getAtivo() {
+		return ativo;
+	}
+
+
+
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
+
+
+
+
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
+
 
 
 
@@ -95,15 +137,18 @@ public class Cliente {
 
 
 
+
 	public LocalDate getDataAtualizacao() {
 		return dataAtualizacao;
 	}
 
 
 
+
 	public void setDataAtualizacao(LocalDate dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
+
 
 
 
