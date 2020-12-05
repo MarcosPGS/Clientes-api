@@ -53,6 +53,7 @@ public class ClienteService {
 		cliente.setCpf(c.getCpf());
 		cliente.setAtivo(c.getAtivo().toUpperCase());
 		cliente.setNome(c.getNome().toUpperCase());
+		cliente.setCelular(c.getCelular());
 		
 		if (ValidarCPF.isValidCpf(cliente.getCpf()) == false ) {
 			throw new RegraException("Cpf inválido.");
