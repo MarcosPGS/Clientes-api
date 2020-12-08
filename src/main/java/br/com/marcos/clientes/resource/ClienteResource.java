@@ -1,6 +1,7 @@
 package br.com.marcos.clientes.resource;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -69,6 +70,25 @@ public class ClienteResource {
 					}
 					
 					return ResponseEntity.ok().body(totalizador);
+					
+				} catch (Exception e) {
+					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+				}
+			
+
+		}
+		
+		@GetMapping("/id/{id}")
+		public ResponseEntity<?> buscaNome(@PathVariable("id") long id) {
+			
+				
+				try {
+					Optional<Cliente> clienteEncontrado = service.bucarPorID(id);		
+					if (clienteEncontrado == null) {
+						return ResponseEntity.ok().body(null);
+					}
+					
+					return ResponseEntity.ok().body(clienteEncontrado);
 					
 				} catch (Exception e) {
 					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

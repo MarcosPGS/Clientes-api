@@ -1,0 +1,55 @@
+package br.com.marcos.clientes.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.marcos.clientes.dto.ServicoPrestadoDTO;
+import br.com.marcos.clientes.exceptions.RegraException;
+import br.com.marcos.clientes.model.Cliente;
+import br.com.marcos.clientes.model.ServicoPrestado;
+import br.com.marcos.clientes.repository.ServicosPrestadosRepository;
+import br.com.marcos.clientes.util.BigDecimalConverter;
+import br.com.marcos.clientes.util.LocalDateConverter;
+
+@Service
+public class ServicosPrestadosService {
+	
+	@Autowired
+	private ServicosPrestadosRepository repository;
+	
+	
+	@Autowired
+	private BigDecimalConverter bigDecimalConverter;
+	
+	@Autowired
+	private ClienteService clienteService;
+	
+	
+	@Autowired
+	private LocalDateConverter localDateConverter;
+	
+	public List<ServicoPrestado> listarTodosServicos(){
+		return repository.findAll();
+	}
+
+	public ServicoPrestado salvarServicoPrestado(ServicoPrestadoDTO dto) throws RegraException {
+		ServicoPrestado servico = new ServicoPrestado();
+		Optional<Cliente> clienteOptional = clienteService.bucarPorID(dto.getIdCliente());
+		if (!clienteOptional.isPresent()) {
+			throw new RegraException("Cliente não encontrado!");
+		}
+		
+		servico.setDescricao(dto.getDescricao());
+		servico.setValor(bigDecimalConverter.converter(dto.getPreco()));
+		servico.setData(localDateConverter.converter(dto.getData()));
+		servico.setCliente(clienteOptional.get());
+		
+		ServicoPrestado servicoSalvo = repository.save(servico);
+		
+		return servicoSalvo;
+		
+	}
+}

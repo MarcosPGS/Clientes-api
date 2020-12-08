@@ -48,6 +48,10 @@ public class ClienteService {
 		return repository.findByNome(nome);
 	}
 	
+	public Optional<Cliente> bucarPorID(long id){
+		return repository.findById(id);
+	}
+	
 	public Cliente salvarCliente(Cliente c) throws RegraException {
 		Cliente cliente = new Cliente();
 		cliente.setCpf(c.getCpf());
@@ -71,10 +75,17 @@ public class ClienteService {
 		
 	}
 	
-	public Cliente atualizarCliente(Cliente cliente) {
+	public Cliente atualizarCliente(Cliente cliente) throws RegraException {
 		Objects.requireNonNull(cliente.getId());
 		Cliente clienteEncontrado = obterClientePorCpf(cliente.getCpf());
-		clienteEncontrado.setNome(cliente.getNome());
+		clienteEncontrado.setNome(cliente.getNome().toUpperCase());
+		clienteEncontrado.setCelular(cliente.getCelular());
+		clienteEncontrado.setAtivo(cliente.getAtivo().toUpperCase());
+		
+		if (ValidarCPF.isValidCpf(cliente.getCpf()) == false ) {
+			throw new RegraException("Cpf inválido.");
+		}
+		clienteEncontrado.setCpf(cliente.getCpf());
 			
 		clienteEncontrado.setDataAtualizacao(LocalDate.now());
 			return repository.save(clienteEncontrado);

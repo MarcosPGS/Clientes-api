@@ -1,6 +1,7 @@
 package br.com.marcos.clientes.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,22 +13,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "servico")
-public class Servico {
+@Table(name = "Servico_prestado")
+public class ServicoPrestado {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable = false, length = 150)
-	private String descricao;
+	@Column(name="descricao", nullable = false, length = 150)
+	private String descricao; 
 	
-	@Column
+	@Column(name="valor")
 	private BigDecimal valor;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "id_cliente")
-//	private Cliente cliente;
+	@Column(name="data")
+	private LocalDate data;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_cliente")
+	private Cliente cliente;
+
+	
 
 	public long getId() {
 		return id;
@@ -53,13 +59,21 @@ public class Servico {
 		this.valor = valor;
 	}
 
-//	public Cliente getCliente() {
-//		return cliente;
-//	}
-//
-//	public void setCliente(Cliente cliente) {
-//		this.cliente = cliente;
-//	}
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public int hashCode() {
@@ -77,7 +91,7 @@ public class Servico {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Servico other = (Servico) obj;
+		ServicoPrestado other = (ServicoPrestado) obj;
 		if (id != other.id)
 			return false;
 		return true;
