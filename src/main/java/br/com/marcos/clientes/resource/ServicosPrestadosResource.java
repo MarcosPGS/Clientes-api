@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.marcos.clientes.dto.ServicoPrestadoDTO;
@@ -23,12 +24,24 @@ public class ServicosPrestadosResource {
 	private ServicosPrestadosService service;
 	
 	@GetMapping
-	public ResponseEntity<List<ServicoPrestado>> listarCliente(){
+	public ResponseEntity<List<ServicoPrestado>> listarServicos(){
 		List<ServicoPrestado> servicos = service.listarTodosServicos();
 		if (servicos == null) {
 			return ResponseEntity.ok(null);
 		}
 		return ResponseEntity.ok(servicos);
+	}
+	
+	@GetMapping("/pesquisar")
+	public ResponseEntity<Object> listarServicosPesquisa(@RequestParam (value = "nome", required = false) String nome,
+			@RequestParam (value = "mes", required = false) Integer mes) throws RegraException{
+		
+		try {
+			List<ServicoPrestado> servicos = service.pesquisarServicos(nome, mes);
+			return ResponseEntity.ok(servicos);
+		} catch (RegraException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 	
 	@PostMapping

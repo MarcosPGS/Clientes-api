@@ -1,5 +1,7 @@
 package br.com.marcos.clientes.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +14,6 @@ import br.com.marcos.clientes.model.Cliente;
 import br.com.marcos.clientes.model.ServicoPrestado;
 import br.com.marcos.clientes.repository.ServicosPrestadosRepository;
 import br.com.marcos.clientes.util.BigDecimalConverter;
-import br.com.marcos.clientes.util.LocalDateConverter;
 
 @Service
 public class ServicosPrestadosService {
@@ -28,9 +29,6 @@ public class ServicosPrestadosService {
 	private ClienteService clienteService;
 	
 	
-	@Autowired
-	private LocalDateConverter localDateConverter;
-	
 	public List<ServicoPrestado> listarTodosServicos(){
 		return repository.findAll();
 	}
@@ -41,15 +39,23 @@ public class ServicosPrestadosService {
 		if (!clienteOptional.isPresent()) {
 			throw new RegraException("Cliente não encontrado!");
 		}
+		LocalDate data = LocalDate.parse(dto.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
 		servico.setDescricao(dto.getDescricao());
 		servico.setValor(bigDecimalConverter.converter(dto.getPreco()));
-		servico.setData(localDateConverter.converter(dto.getData()));
+		servico.setData(data);
 		servico.setCliente(clienteOptional.get());
 		
 		ServicoPrestado servicoSalvo = repository.save(servico);
 		
 		return servicoSalvo;
 		
+	}
+	
+	public List<ServicoPrestado> pesquisarServicos(String nome, Integer mes) throws RegraException{
+		if (nome == null && mes == null) {
+			throw new RegraException("Por favor digiti o nome e o mês para realizar a pesquisa.");
+		}
+		return repository.findByClienteAndMes("%" + nome + "%", mes);
 	}
 }
