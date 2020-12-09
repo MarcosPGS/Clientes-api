@@ -2,6 +2,8 @@ package br.com.marcos.clientes.resource;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.marcos.clientes.dto.ServicoPrestadoDTO;
+import br.com.marcos.clientes.entity.ServicoPrestado;
 import br.com.marcos.clientes.exceptions.RegraException;
-import br.com.marcos.clientes.model.ServicoPrestado;
 import br.com.marcos.clientes.service.ServicosPrestadosService;
 
 @RestController
@@ -45,7 +47,7 @@ public class ServicosPrestadosResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> salvarServico( @RequestBody ServicoPrestadoDTO dto){
+	public ResponseEntity<Object> salvarServico( @RequestBody @Valid ServicoPrestadoDTO dto){
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarServicoPrestado(dto));
 			

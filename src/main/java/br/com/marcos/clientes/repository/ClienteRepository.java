@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import br.com.marcos.clientes.model.Cliente;
+import br.com.marcos.clientes.entity.Cliente;
 
 public interface ClienteRepository  extends JpaRepository<Cliente, Long>, ClienteRepositoryQuery{
 

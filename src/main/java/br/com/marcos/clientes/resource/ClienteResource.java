@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.marcos.clientes.dto.ClienteInfoDTO;
+import br.com.marcos.clientes.entity.Cliente;
 import br.com.marcos.clientes.exceptions.RegraException;
-import br.com.marcos.clientes.model.Cliente;
 import br.com.marcos.clientes.service.ClienteService;
 
 

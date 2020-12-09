@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.util.StringUtils;
 
-import br.com.marcos.clientes.model.Cliente;
+import br.com.marcos.clientes.entity.Cliente;
 import br.com.marcos.clientes.repository.ClienteRepositoryQuery;
 
 public class ClienteRepositoryImpl implements ClienteRepositoryQuery{

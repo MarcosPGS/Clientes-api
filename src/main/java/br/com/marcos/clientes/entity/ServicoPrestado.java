@@ -1,4 +1,4 @@
-package br.com.marcos.clientes.model;
+package br.com.marcos.clientes.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

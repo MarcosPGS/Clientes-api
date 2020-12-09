@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.marcos.clientes.dto.ServicoPrestadoDTO;
+import br.com.marcos.clientes.entity.Cliente;
+import br.com.marcos.clientes.entity.ServicoPrestado;
 import br.com.marcos.clientes.exceptions.RegraException;
-import br.com.marcos.clientes.model.Cliente;
-import br.com.marcos.clientes.model.ServicoPrestado;
 import br.com.marcos.clientes.repository.ServicosPrestadosRepository;
 import br.com.marcos.clientes.util.BigDecimalConverter;
 

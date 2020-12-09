@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.marcos.clientes.dto.ClienteInfoDTO;
+import br.com.marcos.clientes.entity.Cliente;
 import br.com.marcos.clientes.exceptions.RegraException;
-import br.com.marcos.clientes.model.Cliente;
 import br.com.marcos.clientes.repository.ClienteRepository;
 import br.com.marcos.clientes.util.ValidarCPF;
 

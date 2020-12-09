@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import br.com.marcos.clientes.model.ServicoPrestado;
+import br.com.marcos.clientes.entity.ServicoPrestado;
 
 public interface ServicosPrestadosRepository extends JpaRepository<ServicoPrestado, Long>{
 
