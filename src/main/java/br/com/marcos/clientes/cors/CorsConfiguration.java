@@ -37,8 +37,7 @@ public class CorsConfiguration implements Filter {
 	        response.setHeader("Access-Control-Max-Age", "3600");
 	        response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
 	        response.setHeader("Access-Control-Expose-Headers", "Location");
-//        	response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
-//        	response.setHeader("Access-Control-Max-Age", "3600");
+        	response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			
 			response.setStatus(HttpServletResponse.SC_OK);
 		} else {
