@@ -25,6 +25,9 @@ public class Usuario {
 	@Column(name="username", unique = true)
 	private String username;
 	
+	@Column(name="nome")
+	private String nome;
+	
 	@Column(name="password")
 	private String password;
 	
@@ -53,6 +56,14 @@ public class Usuario {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getPassword() {
