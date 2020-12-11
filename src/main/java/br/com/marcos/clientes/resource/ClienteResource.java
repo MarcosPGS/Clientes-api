@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class ClienteResource {
 	private ClienteService service;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_PESQUISAR') and #oauth.hasScope('read')")
 	public ResponseEntity<List<Cliente>> listarCliente(){
 		List<Cliente> clientes = service.listarTodosCliente();
 		if (clientes == null) {
@@ -41,6 +43,7 @@ public class ClienteResource {
 	
 	// endpoint busca por nome
 		@GetMapping("/{nomeCliente}")
+		@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_PESQUISAR') and #oauth.hasScope('read')")
 		public ResponseEntity<?> buscaNome(@PathVariable("nomeCliente") String nome) {
 			
 				
@@ -60,6 +63,7 @@ public class ClienteResource {
 		}
 		
 		@GetMapping("/totalizador")
+		@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_PESQUISAR') and #oauth.hasScope('read')")
 		public ResponseEntity<?> totalizadoresCliente() {
 			
 				
@@ -79,6 +83,7 @@ public class ClienteResource {
 		}
 		
 		@GetMapping("/id/{id}")
+		@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_PESQUISAR') and #oauth.hasScope('read')")
 		public ResponseEntity<?> buscaNome(@PathVariable("id") long id) {
 			
 				
@@ -100,6 +105,7 @@ public class ClienteResource {
 		
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_CADASTRAR') and #oauth.hasScope('write')")
 	public ResponseEntity<Object> salvarCliente( @RequestBody @Valid Cliente cliente){
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarCliente(cliente));
@@ -113,6 +119,7 @@ public class ClienteResource {
 	}
 	
 	@PutMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_CADASTRAR') and #oauth.hasScope('write')")
 	public ResponseEntity<Object> atualizar(@RequestBody @Valid Cliente cliente) {
 		try {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.atualizarCliente(cliente));
@@ -124,6 +131,7 @@ public class ClienteResource {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_REMOVER') and #oauth.hasScope('write')")
 	public ResponseEntity deletar(@PathVariable Long id) {
 		return service.obterClientePorId(id).map(entidade -> {
 			service.deletarCliente(entidade.getId());

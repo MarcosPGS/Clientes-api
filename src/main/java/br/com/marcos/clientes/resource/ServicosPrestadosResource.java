@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class ServicosPrestadosResource {
 	private ServicosPrestadosService service;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_PESQUISAR') and #oauth.hasScope('read')")
 	public ResponseEntity<List<ServicoPrestado>> listarServicos(){
 		List<ServicoPrestado> servicos = service.listarTodosServicos();
 		if (servicos == null) {
@@ -35,6 +37,7 @@ public class ServicosPrestadosResource {
 	}
 	
 	@GetMapping("/pesquisar")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_PESQUISAR') and #oauth.hasScope('read')")
 	public ResponseEntity<Object> listarServicosPesquisa(@RequestParam (value = "nome", required = false) String nome,
 			@RequestParam (value = "mes", required = false) Integer mes) throws RegraException{
 		
@@ -47,6 +50,7 @@ public class ServicosPrestadosResource {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_CADASTRAR') and #oauth.hasScope('write')")
 	public ResponseEntity<Object> salvarServico( @RequestBody @Valid ServicoPrestadoDTO dto){
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarServicoPrestado(dto));

@@ -31,7 +31,7 @@ public class CorsConfiguration implements Filter {
 		response.setHeader("Access-Control-Allow-Origin", originPermitida);
         response.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		if ("OPTIONS".equals(request.getMethod())) {
+		if ("OPTIONS".equals(request.getMethod())  && originPermitida.equals(request.getHeader("Origin"))) {
 			response.setHeader("Access-Control-Allow-Origin", "*");
 	        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
 	        response.setHeader("Access-Control-Max-Age", "3600");
