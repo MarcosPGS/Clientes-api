@@ -1,5 +1,4 @@
 package br.com.marcos.clientes.config;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,8 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @Configuration
 @EnableAuthorizationServer
-public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -23,12 +23,6 @@ public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapt
 		return new InMemoryTokenStore();
 	}
 	
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints
-		.tokenStore(tokenStore())
-		.authenticationManager(authenticationManager);
-	}
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -36,10 +30,19 @@ public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapt
 		//senha da aplicacaco
 		clients
 			.inMemory()
-			.withClient("my-angular-app")
-			.secret("@321")
+			.withClient("angular")
+			.secret("@ngul@r0")
 			.scopes("read", "write")
 			.authorizedGrantTypes("password")
 			.accessTokenValiditySeconds(1800);
 	}
+	
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints
+		.tokenStore(tokenStore())
+		.authenticationManager(authenticationManager);
+	}
+
+	
 }
