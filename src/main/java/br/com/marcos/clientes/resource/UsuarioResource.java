@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.marcos.clientes.dto.UsuarioDTO;
 import br.com.marcos.clientes.entity.Usuario;
 import br.com.marcos.clientes.exceptions.RegraException;
 import br.com.marcos.clientes.service.UsuarioLoginService;
@@ -61,9 +62,10 @@ public class UsuarioResource {
 //	}
 //	
 	@PostMapping
-	public ResponseEntity<?> salvarUsuario(@RequestBody Usuario usuario){
+	public ResponseEntity<Object> salvarUsuario(@RequestBody UsuarioDTO usuario){
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(service.salvarUsuario(usuario));
+			service.salvarUsuario(usuario);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (RegraException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		} 

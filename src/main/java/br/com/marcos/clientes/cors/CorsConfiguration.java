@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsConfiguration implements Filter {
 
-	private String originPermitida = "http://localhost:4200 "; // TODO: Configurar para diferentes ambientes
+	private String originPermitida = "http://localhost:4200"; // TODO: Configurar para diferentes ambientes
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -31,7 +31,7 @@ public class CorsConfiguration implements Filter {
 		response.setHeader("Access-Control-Allow-Origin", originPermitida);
         response.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		if ("OPTIONS".equals(request.getMethod())  && originPermitida.equals(request.getHeader("Origin"))) {
+		if ("OPTIONS".equals(request.getMethod()) ) {
 			response.setHeader("Access-Control-Allow-Origin", "*");
 	        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
 	        response.setHeader("Access-Control-Max-Age", "3600");
