@@ -14,7 +14,7 @@ public class Permissao {
 	@Id
 	private long id;
 	
-	@Column(name="username")
+	@Column(name="descricao")
 	private String descricao;
 
 	public long getId() {

@@ -25,7 +25,7 @@ public class UsuarioLoginService {
 			throw new RegraException("Já existe usuário com esse nome.");
 		}
 		usuarioSalvo.setEmail(usuario.getEmail());
-		usuarioSalvo.setNome(usuario.getNome());
+		usuarioSalvo.setNome(usuario.getNome().toUpperCase());
 		usuarioSalvo.setPassword(gerador.encode(usuario.getPassword()));
 		usuarioSalvo.setUsername(usuario.getUsername());
 		
